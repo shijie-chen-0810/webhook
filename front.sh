@@ -8,8 +8,6 @@ echo "拉去新代码"
 git pull origin master
 echo "开始拉去新的依赖"
 npm install
-echo "开始打包"
-npm run build
 echo "开始构建"
 docker build -t front:1.0 .
 echo "停止旧容器并删除旧容器"
