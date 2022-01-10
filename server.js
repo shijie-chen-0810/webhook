@@ -10,13 +10,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.post("/webhook", (req, res) => {
   console.log("webhook Listen Event");
-  const event = req.headers["x-gitHub-event"]; // event === push
+  const event = req.headers["x-github-event"]; // event === push
   const signnature = req.headers["x-hub-signature"];
   // if (signnature !== sign()) {
   //   return res.end("Not Allowed");
   // }
-  console.log(req.headers, "req.headers");
-  console.log(event, signnature, "event,signnature");
+  console.log("-------------------");
+  console.log(req.headers, "req.headers", req.body, "req.body");
+  console.log("-------------------");
   console.log("验证通过");
   res.end(JSON.stringify({ ok: true }));
 });
