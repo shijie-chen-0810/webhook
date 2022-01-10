@@ -15,9 +15,20 @@ app.post("/webhook", (req, res) => {
   // if (signnature !== sign()) {
   //   return res.end("Not Allowed");
   // }
-  console.log("-------------------");
-  console.log(req.headers, "req.headers", req.body, "req.body");
-  console.log("-------------------");
+  const branch = req.body["ref"].split("/").pop();
+  if (branch === "master" && event === "push") {
+    // var download_file_wget = function (file_url) {
+    //   // 提取文件名
+    //   var file_name = url.parse(file_url).pathname.split("/").pop();
+    //   // 组合wget命令
+    //   var wget = "wget -P " + DOWNLOAD_DIR + " " + file_url;
+    //   // 使用exec执行wget命令
+    //   var child = exec(wget, function (err, stdout, stderr) {
+    //     if (err) throw err;
+    //     else console.log(file_name + " downloaded to " + DOWNLOAD_DIR);
+    //   });
+    // };
+  }
   console.log("验证通过");
   res.end(JSON.stringify({ ok: true }));
 });
