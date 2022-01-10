@@ -15,6 +15,7 @@ app.post("/webhook", (req, res) => {
   // if (signnature !== sign()) {
   //   return res.end("Not Allowed");
   // }
+  console.log(req.headers, "req.headers");
   console.log(event, signnature, "event,signnature");
   console.log("验证通过");
   res.end(JSON.stringify({ ok: true }));
