@@ -18,19 +18,20 @@ app.post("/webhook", (req, res) => {
   // }
   const branch = req.body["ref"].split("/").pop();
   if (branch === "master" && event === "push") {
+    console.log("开始执行子进程");
     let child = spawn("sh", [
       `${req.body.repository.name.includes("fe") ? "front" : "back"}.sh`,
     ]);
     let buffers = [];
     child.stdout.on("data", (buffer) => {
+      console.log("正在执行");
       buffers.push(buffer);
     });
     child.stdout.on("end", () => {
       const body = Buffer.concat(buffers);
-      console.log(body, "bufferBody");
+      console.log(body, "执行结束");
     });
   }
-  console.log("验证通过");
   res.end(JSON.stringify({ ok: true }));
 });
 
