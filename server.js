@@ -30,7 +30,7 @@ app.post("/webhook", (req, res) => {
       buffers.push(buffer);
     });
     child.stdout.on("end", () => {
-      const body = Buffer.concat(buffers);
+      const bufferList = Buffer.concat(buffers);
       const date = new Date();
       console.log(body, "bodybodybodybody");
       sendMail(`
