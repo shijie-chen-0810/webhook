@@ -6,6 +6,8 @@ git reset --hard origin/master
 git clean -f
 echo "拉去新代码"
 git pull origin master
+echo "安装依赖"
+npm i
 echo "开始构建"
 docker build -t back:1.0 .
 echo "停止旧容器并删除旧容器"
