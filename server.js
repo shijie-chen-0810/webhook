@@ -32,6 +32,7 @@ app.post("/webhook", (req, res) => {
     child.stdout.on("end", () => {
       const body = Buffer.concat(buffers);
       const date = new Date();
+      console.log(body, "bodybodybodybody");
       sendMail(`
       <div>
         部署项目名称:${body.repository.name}
