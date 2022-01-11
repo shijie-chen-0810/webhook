@@ -30,14 +30,12 @@ app.post("/webhook", (req, res) => {
       buffers.push(buffer);
     });
     child.stdout.on("end", () => {
-      const bufferList = Buffer.concat(buffers);
       const date = new Date();
-      console.log(body, "bodybodybodybody");
       sendMail(`
       <div>
-        部署项目名称:${body.repository.name}
-        部署人:${body.head_commit.author.name}
-        commit信息:${body.head_commit.message}
+        部署项目名称:${body.repository.name}<br/>
+        部署人:${body.head_commit.author.name}<br/>
+        commit信息:${body.head_commit.message}<br/>
         部署日期:${
           date.getFullYear() +
           "/" +
