@@ -4,18 +4,19 @@ const { spawn } = require("child_process");
 const crypto = require("crypto");
 const SECRET = "88888888";
 const app = express();
-// const sign = (body) => {
-//   return `sha1=${crypto.createHmac("sha1", SECRET).update(body).digest("hex")}`;
-// };
+const sign = (body) => {
+  return `sha1=${crypto.createHmac("sha1", SECRET).update(body).digest("hex")}`;
+};
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.post("/webhook", (req, res) => {
   console.log("webhook Listen Event");
   const event = req.headers["x-github-event"]; // event === push
   const signnature = req.headers["x-hub-signature"];
-  // if (signnature !== sign()) {
-  //   return res.end("Not Allowed");
-  // }
+  console.log(signnature, sign(JSON.stringify(req.body)), "signnature");
+  if (signnature !== sign(JSON.stringify(req.body))) {
+    return res.end("Not Allowed");
+  }
   const branch = req.body["ref"].split("/").pop();
   if (branch === "master" && event === "push") {
     console.log("开始执行子进程");
