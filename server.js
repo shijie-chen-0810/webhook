@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const { spawn } = require("child_process");
 const crypto = require("crypto");
 const SECRET = "88888888";
 const app = express();
@@ -17,17 +18,17 @@ app.post("/webhook", (req, res) => {
   // }
   const branch = req.body["ref"].split("/").pop();
   if (branch === "master" && event === "push") {
-    // var download_file_wget = function (file_url) {
-    //   // 提取文件名
-    //   var file_name = url.parse(file_url).pathname.split("/").pop();
-    //   // 组合wget命令
-    //   var wget = "wget -P " + DOWNLOAD_DIR + " " + file_url;
-    //   // 使用exec执行wget命令
-    //   var child = exec(wget, function (err, stdout, stderr) {
-    //     if (err) throw err;
-    //     else console.log(file_name + " downloaded to " + DOWNLOAD_DIR);
-    //   });
-    // };
+    let child = spawn("sh", [
+      `${req.body.repository.name.includes("fe") ? "front" : "back"}.sh`,
+    ]);
+    let buffers = [];
+    child.stdout.on("data", (buffer) => {
+      buffers.push(buffer);
+    });
+    child.stdout.on("end", () => {
+      const body = Buffer.concat(buffers);
+      console.log(body, "bufferBody");
+    });
   }
   console.log("验证通过");
   res.end(JSON.stringify({ ok: true }));
