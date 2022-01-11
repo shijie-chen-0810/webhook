@@ -36,8 +36,8 @@ app.post("/webhook", (req, res) => {
       sendMail(`
       <div>
         部署项目名称:${body.repository.name}
-        部署人:${body.commits.author.name}
-        commit信息:${body.commits.message}
+        部署人:${body.head_commit.author.name}
+        commit信息:${body.head_commit.message}
         部署日期:${
           date.getFullYear() +
           "/" +
